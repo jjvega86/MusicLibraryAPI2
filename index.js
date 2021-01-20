@@ -1,8 +1,10 @@
 const { response } = require('express');
-const express = require('express');
+const express = require('express'),
+bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
 
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //seriously, this is important
@@ -46,14 +48,15 @@ app.get('/api/songs/:id', (req,res) =>{
 })
 
 app.post('/api/songs', (req,res) => {
+    console.log(req.body);
 
     let song ={
         id: songs.length + 1,
-        title: req.body.title,
-        artist: req.body.artist,
-        album: req.body.album,
-        genre: req.body.genre,
-        releaseDate: req.body.releaseDate
+        title: req.body.song.title,
+        artist: req.body.song.artist,
+        album: req.body.song.album,
+        genre: req.body.song.genre,
+        releaseDate: req.body.song.releaseDate
     }
 
     songs.push(song);
